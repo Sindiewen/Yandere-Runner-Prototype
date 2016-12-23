@@ -13,10 +13,15 @@ public class MyCharacter : MonoBehaviour {
 	public float bulletSpeed = 15.0f;
 	public GameObject bulletPrefab;
 
+	[Header("Jump")]
+	public float JumpSpeed = 8.0f;
+	public float gravity = 20.0f;
+
 	private Player player; // The Rewired Player
 	private CharacterController cc;
 	private Vector3 moveVector;
 	private bool fire;
+
 
 	void Awake() {
 		// Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -36,20 +41,33 @@ public class MyCharacter : MonoBehaviour {
 		// whether the input is coming from a joystick, the keyboard, mouse, or a custom controller.
 
 		moveVector.x = player.GetAxis("Move Horizontal"); // get input by name or action id
-		moveVector.y = player.GetAxis("Move Vertical");
+		//moveVector.y = player.GetAxis("Jump");
+
 		fire = player.GetButtonDown("Fire");
 	}
 
 	private void ProcessInput() {
 		// Process movement
-		if(moveVector.x != 0.0f || moveVector.y != 0.0f) {
+		if(moveVector.x != 0.0f)
+		{
 			cc.Move(moveVector * moveSpeed * Time.deltaTime);
 		}
+
+		if (Input.GetButtonDown("Jump"))
+		{
+			moveVector.y = JumpSpeed;
+		}
+
 
 		// Process fire
 		if(fire) {
 			GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
 			bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
 		}
+
+
+		// Processess Gravity
+		moveVector.y -= gravity * Time.deltaTime;
 	}
+
 }
