@@ -70,7 +70,8 @@ public class PlayerIchiroController : MonoBehaviour
         float move = Input.GetAxis("Move Horizontal");
 
         // Moves the player by adding velocity to the player
-        rb2D.velocity = new Vector2(move * MaxMovementSpeed, rb2D.velocity.y);
+        // NOTE: Changing 1 to 'move' will allow full movement in 2d. 1 is auto run
+        rb2D.velocity = new Vector2(1 * MaxMovementSpeed, rb2D.velocity.y);
 
         // Flips the player in regards to where they're moving and if they're facing right or not
         if (move > 0 && !facingRight || move < 0 && facingRight)
