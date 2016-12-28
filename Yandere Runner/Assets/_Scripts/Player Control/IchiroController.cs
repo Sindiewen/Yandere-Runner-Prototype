@@ -4,15 +4,16 @@ using UnityEngine;
 using Rewired;
 
 // Player Controller for Ichiro
-public class PlayerControlBase : MonoBehaviour
+public class IchiroController : MonoBehaviour
 {
 
     [Header("Player Movement Values")]
     public float MaxMovementSpeed;  // The players movement speed
+	public float jumpForce;			// The players jump force
 
     [Header("Player Physics")]
     public Transform groundCheck;   // Stores a transform of a Groundcheck object
-//    public LayerMask whatIsGround;
+	public LayerMask whatIsGround;
 
     // Private variables
 
@@ -21,8 +22,13 @@ public class PlayerControlBase : MonoBehaviour
     private Player player;
 
     // Player physics
-    private bool facingRight;       // Weather the player is facing right or not
-    private bool isGrounded;        // If the player is grounded or not
+    private bool facingRight;       		// Weather the player is facing right or not
+	private bool isGrounded    = false; 	// If the player is grounded or not
+	private float groundRadius = 0.2f;		// The radius of the grounded circle
+
+	// Player Controller
+	private float move;				// Stores player movement data
+	private bool jump;				// Stores weather the player is jumping or not
 
     // Player Animation
     private Animator anim;          // Reference to the player's Animator component
@@ -59,15 +65,16 @@ public class PlayerControlBase : MonoBehaviour
     private void FixedUpdate()
     {
 		
-        // Checks weahter the player is currently grounded or not using a Linecast
+        // Checks weahter the player is currently grounded or not using a collider circle
         // Returns a bool if grounded or not
-        isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        //isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         anim.SetBool("isGrounded", isGrounded);
 
 
 
         // Stores the movement value of the player
-        float move = Input.GetAxis("Move Horizontal");
+        move = Input.GetAxis("Move Horizontal");
 
         // Moves the player by adding velocity to the player
         // NOTE: Changing 1 to 'move' will allow full movement in 2d. 1 is auto run
@@ -84,6 +91,19 @@ public class PlayerControlBase : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(move));
     }
 
+	private void Update()
+	{
+		// Stores weather the player pressed jump that frame
+		jump = Input.GetButtonDown("Jump");
+
+		// Checks if the player is grounded and is jumping
+		if (isGrounded && jump)
+		{
+			anim.SetBool("isGrounded", false);
+			rb2D.AddForce(new Vector2(0, jumpForce));
+
+		}
+	}
 
 
     private void OnCollisionEnter2D(Collision2D collision)

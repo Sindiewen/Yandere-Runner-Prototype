@@ -183,9 +183,11 @@ GameObject:
   m_Component:
   - component: {fileID: 871063075}
   - component: {fileID: 871063074}
+  - component: {fileID: 871063077}
   - component: {fileID: 871063073}
   - component: {fileID: 871063072}
   - component: {fileID: 871063071}
+  - component: {fileID: 871063076}
   m_Layer: 8
   m_Name: Ichiro
   m_TagString: Untagged
@@ -259,12 +261,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &871063074
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -276,9 +278,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.18728158}
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.97}
+  m_Size: {x: 0.75, y: 0.5954369}
 --- !u!4 &871063075
 Transform:
   m_ObjectHideFlags: 0
@@ -293,6 +295,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &871063076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 871063070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b235b954121ce184da0abc37be0c5600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxMovementSpeed: 10
+  jumpForce: 700
+  groundCheck: {fileID: 1473365246}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 4294967039
+--- !u!58 &871063077
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 871063070}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: -0.11}
+  serializedVersion: 2
+  m_Radius: 0.37463552
 --- !u!1 &1351178914
 GameObject:
   m_ObjectHideFlags: 0
