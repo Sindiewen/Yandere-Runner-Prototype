@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
 
-// Player Ichiro's player controller
-// Since this is an infinite runner, the player Ichiro will not stop unless they are caught by
-// Yumi.
-public class PlayerIchiroController : MonoBehaviour
+// Player Controller for Ichiro
+public class PlayerControlBase : MonoBehaviour
 {
 
     [Header("Player Movement Values")]
@@ -60,10 +58,12 @@ public class PlayerIchiroController : MonoBehaviour
     // Fixed Update - For Physics
     private void FixedUpdate()
     {
+		
         // Checks weahter the player is currently grounded or not using a Linecast
         // Returns a bool if grounded or not
         isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
         anim.SetBool("isGrounded", isGrounded);
+
 
 
         // Stores the movement value of the player
@@ -71,7 +71,7 @@ public class PlayerIchiroController : MonoBehaviour
 
         // Moves the player by adding velocity to the player
         // NOTE: Changing 1 to 'move' will allow full movement in 2d. 1 is auto run
-        rb2D.velocity = new Vector2(1 * MaxMovementSpeed, rb2D.velocity.y);
+		rb2D.velocity = new Vector2(move * MaxMovementSpeed, rb2D.velocity.y);
 
         // Flips the player in regards to where they're moving and if they're facing right or not
         if (move > 0 && !facingRight || move < 0 && facingRight)
