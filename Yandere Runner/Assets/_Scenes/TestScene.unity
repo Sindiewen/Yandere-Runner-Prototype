@@ -308,6 +308,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxMovementSpeed: 10
   jumpForce: 700
+  heightLimit: 10
+  floatSpeed: 2
   groundCheck: {fileID: 1473365246}
   whatIsGround:
     serializedVersion: 2

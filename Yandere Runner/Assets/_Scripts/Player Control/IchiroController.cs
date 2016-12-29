@@ -95,14 +95,18 @@ public class IchiroController : MonoBehaviour
 	{
 		// Stores weather the player pressed jump that frame
 		jump = Input.GetButtonDown("Jump");
-
+        
 		// Checks if the player is grounded and is jumping
 		if (isGrounded && jump)
 		{
+            // Player is now jumping
+
+            // Sets animation - player is jumping
 			anim.SetBool("isGrounded", false);
 			rb2D.AddForce(new Vector2(0, jumpForce));
+        }
 
-		}
+
 	}
 
 
