@@ -69,7 +69,7 @@ public class IchiroController : MonoBehaviour
         // Returns a bool if grounded or not
         //isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
-        anim.SetBool("isGrounded", isGrounded);
+        anim.SetBool("OnGround", isGrounded);
 
 
 
@@ -102,7 +102,7 @@ public class IchiroController : MonoBehaviour
             // Player is now jumping
 
             // Sets animation - player is jumping
-			anim.SetBool("isGrounded", false);
+			anim.SetBool("OnGround", false);
 			rb2D.AddForce(new Vector2(0, jumpForce));
         }
 

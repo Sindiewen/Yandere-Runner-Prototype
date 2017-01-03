@@ -6,15 +6,23 @@ using UnityEngine;
 [RequireComponent(typeof(PlatformerMotor2D))]
 public class PlayerController2D : MonoBehaviour
 {
+    // Public Variables
+    public bool AutoRunToggle = false;
+
+    // Private Variables
+
     private PlatformerMotor2D _motor;
     private bool _restored = true;
     private bool _enableOneWayPlatforms;
     private bool _oneWayPlatformsAreWalls;
 
+    private Animator anim;
+
     // Use this for initialization
     void Start()
     {
         _motor = GetComponent<PlatformerMotor2D>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     // before enter en freedom state for ladders
@@ -41,6 +49,8 @@ public class PlayerController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        anim.SetBool("OnGround", true);
+
         // use last state to restore some ladder specific values
         if (_motor.motorState != PlatformerMotor2D.MotorState.FreedomState)
         {
@@ -52,8 +62,10 @@ public class PlayerController2D : MonoBehaviour
         // If you want to jump in ladders, leave it here, otherwise move it down
         if (Input.GetButtonDown(PC2D.Input.JUMP))
         {
+            anim.SetBool("OnGround", false);
             _motor.Jump();
             _motor.DisableRestrictedArea();
+
         }
 
         _motor.jumpingHeld = Input.GetButton(PC2D.Input.JUMP);
@@ -65,6 +77,12 @@ public class PlayerController2D : MonoBehaviour
             _motor.normalizedYMovement = Input.GetAxis(PC2D.Input.VERTICAL);
 
             return; // do nothing more
+        }
+
+        // AutoRun 
+        if (AutoRunToggle)
+        {
+            _motor.normalizedXMovement = 1;
         }
 
         // X axis movement
@@ -118,5 +136,7 @@ public class PlayerController2D : MonoBehaviour
         {
             _motor.Dash();
         }
+        
+        anim.SetFloat("Speed", _motor.normalizedXMovement);
     }
 }
