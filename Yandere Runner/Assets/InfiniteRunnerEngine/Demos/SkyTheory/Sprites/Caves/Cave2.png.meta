@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: 40b37361a5b340c4c83109a01e5c119b
+timeCreated: 1457897660
+licenseType: Store
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Cave2_0
+    21300002: Cave2_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Cave2_0
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 452
+        width: 876
+        height: 572
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 111, y: -223}
+        - {x: 116, y: -212}
+        - {x: 120, y: -198}
+        - {x: 125, y: -186}
+        - {x: 129, y: -172}
+        - {x: 137, y: -149}
+        - {x: 139, y: -140}
+        - {x: 146, y: -135}
+        - {x: 151, y: -134}
+        - {x: 159, y: -132}
+        - {x: 214, y: -118}
+        - {x: 230, y: -114}
+        - {x: 232, y: -111}
+        - {x: 235, y: -105}
+        - {x: 239, y: -94}
+        - {x: 258, y: -47}
+        - {x: 263, y: -35}
+        - {x: 271, y: -15}
+        - {x: 274, y: -10}
+        - {x: 284, y: -9}
+        - {x: 303, y: -3}
+        - {x: 309, y: -2}
+        - {x: 321, y: 1}
+        - {x: 327, y: 8}
+        - {x: 342, y: 26}
+        - {x: 348, y: 33}
+        - {x: 368, y: 57}
+        - {x: 374, y: 64}
+        - {x: 394, y: 88}
+        - {x: 400, y: 95}
+        - {x: 415, y: 113}
+        - {x: 426, y: 126}
+        - {x: 438, y: 140}
+        - {x: 438, y: 166}
+        - {x: 436, y: 186}
+        - {x: 435, y: 195}
+        - {x: 431, y: 235}
+        - {x: 430, y: 244}
+        - {x: 426, y: 284}
+        - {x: 425, y: 286}
+        - {x: -438, y: 286}
+        - {x: -438, y: 269}
+        - {x: -437, y: 261}
+        - {x: -436, y: 252}
+        - {x: -433, y: 228}
+        - {x: -432, y: 219}
+        - {x: -429, y: 195}
+        - {x: -428, y: 186}
+        - {x: -425, y: 162}
+        - {x: -424, y: 148}
+        - {x: -417, y: 144}
+        - {x: -333, y: 102}
+        - {x: -334, y: 99}
+        - {x: -332, y: 87}
+        - {x: -330, y: 81}
+        - {x: -329, y: 74}
+        - {x: -328, y: 68}
+        - {x: -327, y: 61}
+        - {x: -326, y: 55}
+        - {x: -325, y: 48}
+        - {x: -324, y: 42}
+        - {x: -323, y: 35}
+        - {x: -322, y: 29}
+        - {x: -321, y: 22}
+        - {x: -320, y: 16}
+        - {x: -318, y: 14}
+        - {x: -316, y: 14}
+        - {x: -314, y: 16}
+        - {x: -313, y: 33}
+        - {x: -312, y: 53}
+        - {x: -311, y: 74}
+        - {x: -311, y: 91}
+        - {x: -279, y: 75}
+        - {x: -274, y: 61}
+        - {x: -270, y: 49}
+        - {x: -268, y: 42}
+        - {x: -264, y: 29}
+        - {x: -262, y: 22}
+        - {x: -258, y: 9}
+        - {x: -256, y: 2}
+        - {x: -252, y: -11}
+        - {x: -250, y: -18}
+        - {x: -247, y: -28}
+        - {x: -246, y: -31}
+        - {x: -244, y: -38}
+        - {x: -243, y: -41}
+        - {x: -241, y: -48}
+        - {x: -240, y: -51}
+        - {x: -238, y: -58}
+        - {x: -237, y: -61}
+        - {x: -233, y: -75}
+        - {x: -229, y: -81}
+        - {x: -216, y: -100}
+        - {x: -196, y: -129}
+        - {x: -124, y: -233}
+        - {x: -113, y: -249}
+        - {x: -107, y: -256}
+        - {x: -104, y: -257}
+        - {x: -50, y: -266}
+        - {x: 17, y: -277}
+        - {x: 72, y: -286}
+        - {x: 89, y: -286}
+        - {x: 94, y: -276}
+        - {x: 99, y: -262}
+        - {x: 101, y: -253}
+    - name: Cave2_1
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 0
+        width: 260
+        height: 293
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 119, y: -27.5}
+        - {x: 116, y: -0.5}
+        - {x: 114, y: 11.5}
+        - {x: 70, y: 49.5}
+        - {x: 52, y: 66.5}
+        - {x: 49, y: 73.5}
+        - {x: 26, y: 125.5}
+        - {x: 19, y: 141.5}
+        - {x: 15, y: 144.5}
+        - {x: -10, y: 146.5}
+        - {x: -45, y: 146.5}
+        - {x: -63, y: 131.5}
+        - {x: -92, y: 106.5}
+        - {x: -98, y: 100.5}
+        - {x: -102, y: 80.5}
+        - {x: -110, y: 16.5}
+        - {x: -130, y: -124.5}
+        - {x: -130, y: -146.5}
+        - {x: 130, y: -146.5}
+        - {x: 130, y: -122.5}
+        - {x: 125, y: -80.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
