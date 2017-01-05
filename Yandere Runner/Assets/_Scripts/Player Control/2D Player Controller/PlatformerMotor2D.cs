@@ -1017,6 +1017,7 @@ public class PlatformerMotor2D : MonoBehaviour
     ///</summary>
     public bool IsGrounded()
     {
+        //anim.SetBool("OnGround", true);
         return (HasFlag(CollidedSurface.Ground) || onSlope) &&
                !IsJumping() &&
                (onSlope && Vector2.Dot(_velocity, slopeNormal) <= NEAR_ZERO ||
@@ -1048,6 +1049,9 @@ public class PlatformerMotor2D : MonoBehaviour
     #endregion
 
     #region Private
+
+    //private Animator anim;  // Allows use of the player Animator
+
 
     private LayerMask _collisionMask;
 
@@ -1588,6 +1592,7 @@ public class PlatformerMotor2D : MonoBehaviour
 
         if (IsGrounded())
         {
+
             Vector3 slopeDir = GetDownSlopeDir();
 
             if (IsForceSlipping() && _velocity != Vector2.zero && Mathf.Sign(_velocity.x) == Mathf.Sign(slopeDir.x))
@@ -1613,6 +1618,7 @@ public class PlatformerMotor2D : MonoBehaviour
         }
         else if (IsOnGround() || IsSlipping())
         {
+            //anim.SetBool("OnGround", false);
             ChangeState(MotorState.Falling);
         }
 
