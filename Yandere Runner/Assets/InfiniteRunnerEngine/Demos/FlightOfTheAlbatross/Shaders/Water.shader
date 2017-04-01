@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Shader created with Shader Forge v1.26 
@@ -67,7 +69,7 @@ Shader "More Mountains/Water" {
                 v.vertex.xyz += (float3(0,10,0)*_WaveTexture_var.rgb);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
@@ -151,7 +153,7 @@ Shader "More Mountains/Water" {
                 v.vertex.xyz += (float3(0,10,0)*_WaveTexture_var.rgb);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
@@ -219,7 +221,7 @@ Shader "More Mountains/Water" {
                 float2 node_7468 = (o.uv0+node_5136.g*float2(0,1));
                 float4 _WaveTexture_var = tex2Dlod(_WaveTexture,float4(TRANSFORM_TEX(node_7468, _WaveTexture),0.0,0));
                 v.vertex.xyz += (float3(0,10,0)*_WaveTexture_var.rgb);
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 TRANSFER_SHADOW_CASTER(o)
                 return o;
             }
