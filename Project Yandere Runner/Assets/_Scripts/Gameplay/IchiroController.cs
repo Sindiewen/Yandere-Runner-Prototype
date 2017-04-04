@@ -8,8 +8,10 @@ public class IchiroController : MonoBehaviour
 
     [Header("Player Movement Values")]
     public float MaxMovementSpeed = 5;  // The players movement speed
+    
+    public bool playerAutoRun = false;          // Weather the player will autorun or not
 
-    public float jumpForce = 5;
+    public float jumpForce = 5;             // THe force in which the player will jump
 	public float fallMultiplier = 2.5f;     // 
     public float lowJumpMultiplier = 2.0f;  //
 
@@ -39,11 +41,7 @@ public class IchiroController : MonoBehaviour
     // Class Functions
     //////////////////////////////////////////////
 
-    // When the game starts
-    void Awake()
-    {
-    
-    }
+    // UnityEngine Functions //
 
     void Start()
     {
@@ -61,6 +59,10 @@ public class IchiroController : MonoBehaviour
     // Fixed Update - For Physics
     private void FixedUpdate()
     {
+        // Moves the player //
+
+        // Stores the movement value of the player
+        move = Input.GetAxis("Move Horizontal");
 		
         // Checks weahter the player is currently grounded or not using a collider circle
         // Returns a bool if grounded or not
@@ -68,24 +70,32 @@ public class IchiroController : MonoBehaviour
 		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         anim.SetBool("OnGround", isGrounded);
 
-
-
-        // Stores the movement value of the player
-        move = Input.GetAxis("Move Horizontal");
-
-        // Moves the player by adding velocity to the player
-        // NOTE: Changing 1 to 'move' will allow full movement in 2d. 1 is auto run
-		rb2D.velocity = new Vector2(move * MaxMovementSpeed, rb2D.velocity.y);
-
+        // Toggles weather the player is automatically running or not
+        if (playerAutoRun)
+        {
+            // automatically moves the player
+            rb2D.velocity = new Vector2(1 * MaxMovementSpeed, rb2D.velocity.y); 
+            
+            // Sets the float value of the animator's Speed to allow the player animation to play
+            // Mathf.abs gets the absolute value --- 1 = 1, -1 = 1
+            anim.SetFloat("Speed", Mathf.Abs(1));
+        }
+        else
+        {
+            // Moves the player by adding velocity to the player
+            // NOTE: Changing 1 to 'move' will allow full movement in 2d. 1 is auto run
+		    rb2D.velocity = new Vector2(move * MaxMovementSpeed, rb2D.velocity.y);
+		
+            // Sets the float value of the animator's Speed to allow the player animation to play
+            // Mathf.abs gets the absolute value --- 1 = 1, -1 = 1
+            anim.SetFloat("Speed", Mathf.Abs(move));
+        }
+        
         // Flips the player in regards to where they're moving and if they're facing right or not
         if (move > 0 && !facingRight || move < 0 && facingRight)
         {
             flip();
         }
-
-        // Sets the float value of the animator's Speed to allow the player animation to play
-        // Mathf.abs gets the absolute value --- 1 = 1, -1 = 1
-        anim.SetFloat("Speed", Mathf.Abs(move));
     }
 
 	private void Update()
@@ -97,10 +107,10 @@ public class IchiroController : MonoBehaviour
 		// Checks if the player is grounded and is jumping
 		if (isGrounded && jump)
 		{
-            // Player is now jumping
-			rb2D.velocity = Vector2.up * jumpForce;
+            // Player is now jumping - Pushes player upwards
+		    rb2D.velocity = Vector2.up * jumpForce; // Calls Jump Functions
         }
-        
+		
         
         // Better jump from youtube video
         // Better Jumpng in Unity with Four Lines of Code
@@ -117,13 +127,7 @@ public class IchiroController : MonoBehaviour
             // Player is falling
             rb2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;   
         }
-        
-       
-        
-
-
 	}
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -131,6 +135,10 @@ public class IchiroController : MonoBehaviour
         // End game
     }
 
+
+
+
+    // Player Movement Functions
 
 
     // Flips the player sprite so the player can move either direction
@@ -147,12 +155,8 @@ public class IchiroController : MonoBehaviour
 
         // Sets the localscale to what theScale currently is
         transform.localScale = theScale;
-    }
-
-    void Jump()
-    {
-
-    }
+    } 
+    
 
     // When the player has been caught by Yumi
     void Caught()
