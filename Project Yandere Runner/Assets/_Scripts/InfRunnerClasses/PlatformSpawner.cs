@@ -10,83 +10,125 @@ using UnityEngine;
 public class PlatformSpawner : MonoBehaviour
 {
 	// Public Variables
+	[Header ("Platform Spawner Atributes")]
 	public GameObject[] PlatformHolder;		// Holds the platforms for the game to spawn in
+
+	[Header ("Horizontal Platform Spawn Buffer")]
+	public int minPlatformSpawnBuffer = 0;		// Minimum platform spawn buffer between platforms
+	public int maxPlatformSpawnBuffer = 10;		// Maximum platform spawn buffer between platforms
+	
+	[Header ("Vertical Platform Spawn Buffer")]
+	public int minPlatformSpawnHeight = -5;		// minimum height platforms will spawn
+	public int maxPlatformSpawnHeight = 5;		// Maximum height platforms will spawn
+
 
 
 	// Private Variables //
 
-	private GameObject _WhatIsCurrentPlatform;	// Stores the current platform
-	private GameObject _WhatIsCurrentPlatformClone;	// Clone of the current platform
-	private GameObject _WhatIsNextPlatform;		// Stores the next platform to spawn
-	private GameObject _WhatIsNextPlatformClone;	// Clone of the current platform;
+	private GameObject _WhatIsCurrentPlatform;			// Stores the current platform
+	private GameObject _WhatIsCurrentPlatformClone;		// Clone of the current platform
+	private GameObject _WhatIsNextPlatform;				// Stores the next platform to spawn
+	private GameObject _WhatIsNextPlatformClone;		// Clone of the current platform;
+
+
+	private Vector2 _CurPlatformPosition;				// Stores the current platform location
+	private float _CurPlatformHalfWidth;				// Stores the current platforms half of the width 
 	
-	private Vector2 _CurPlatformPosition;		// Stores the current platform location
-	private float _CurPlatformHalfWidth;		// Stores the current platforms half of the width 
+	private float _NextPlatformHalfWidth;				// Stores the next platforms half of the width
+	private Vector2 _NextPlatformNewSpawnLocation;		// Stores a location for the next platfor to spawn to
+
 	
-	private float _NextPlatformHalfWidth;		// Stores the next platforms half of the width
-	private Vector2 _NextPlatformNewSpawnLocation;	// Stores a location for the next platfor to spawn to
-	
-	private float _TotalPlatformWidths;				// Stores the toral platform Widths for both the current and next platform
-	private int _PlatformSpawnBuffer;				// The bufferm distance the platforms will spawn away from each other
-	private int _RandomPlatformToSpawn;				// Stores platform to spawn
+	private float _TotalPlatformWidths;					// Stores the toral platform Widths for both the current and next platform
+	private int _PlatformSpawnBuffer;					// The bufferm distance the platforms will spawn away from each other
+	private int _PlatformSpawnVertBuffer;				// The Buffer of how high the platforms can spawn
+	private int _RandomPlatformToSpawn;					// Stores platform to spawn
 
 	// Use this for initialization
 	void Start ()
 	{
-		
+		// Initializes the start platform
+		SpawnFirstPlatform();
 
-		// Stores the current platform
-		_WhatIsCurrentPlatform = PlatformHolder[0];	// Gets the current platform from the top of the platform holder
-		_WhatIsCurrentPlatformClone = _WhatIsCurrentPlatform;	// Stores a clone of the current platform 
-		
-		Vector2 Origin = new Vector2 (0,0);
+		// Spawns 20 platforms initially
+		for(int i = 0; i < 20; i++)
+		{
+			SpawnPlatforms();
+		}
 
-		// Spawn the platform at origin - 0,0
-		Instantiate(_WhatIsCurrentPlatformClone, Origin, Quaternion.identity);
 
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetButtonDown("Fire1"))
-		{
-			// Store the current platform location in 3D Space
-			_CurPlatformPosition = _WhatIsCurrentPlatform.transform.position;
-		
-			// Get Half of the width of the current platform
-			_CurPlatformHalfWidth = _WhatIsCurrentPlatform.transform.localScale.x / 2;
-			//Debug.Log("Current Platform Half Width: " + _CurPlatformHalfWidth);
-			
-			// Stores a random number to spawn a platform from
-			_RandomPlatformToSpawn = Random.Range(0, PlatformHolder.Length);
-			
-			// Loads next platform into the holder	- The 2nd platform in the list
-			_WhatIsNextPlatform = PlatformHolder[_RandomPlatformToSpawn];
-
-			// Get next platforms half width
-			_NextPlatformHalfWidth = _WhatIsNextPlatform.transform.localScale.x / 2;
-
-			// Seeds random number to create a buffer between both platforms
-			_PlatformSpawnBuffer = Random.Range(1, 10);
-			//Debug.Log ("Platform Spawn Buffer: " + _PlatformSpawnBuffer);
-			
-			// Adds both of the platform Widths and the platform buffer
-			_TotalPlatformWidths = _CurPlatformHalfWidth + _NextPlatformHalfWidth + _PlatformSpawnBuffer;
-
-			// Creates a new vector2 position for the platform to spawn to
-			_NextPlatformNewSpawnLocation += new Vector2 (_CurPlatformPosition.x + _TotalPlatformWidths, 0);
-
-			// Sets the newly spawned platform as the current platform
-			_WhatIsCurrentPlatform = _WhatIsNextPlatform;
-
-			// Instantiate's the new platform
-			Instantiate(_WhatIsNextPlatform, _NextPlatformNewSpawnLocation, Quaternion.identity);
-
-		}
-
 
 	}
+	
+
+
+	// Platform Spawner Functions //
+
+	// Spawns the first platform
+	void SpawnFirstPlatform()
+	{
+		// Creates an origin point for the initial platform to start at.
+		Vector2 Origin = new Vector2 (0,0);			
+	
+		// Initiates a current platform
+		_WhatIsCurrentPlatform = PlatformHolder[0];				// Gets the current platform from the top of the platform holder
+		_WhatIsCurrentPlatformClone = _WhatIsCurrentPlatform;	// Stores a clone of the current platform 
+		
+
+		// Spawn the platform at origin - 0,0
+		Instantiate(_WhatIsCurrentPlatformClone, Origin, Quaternion.identity);
+	}
+
+	void SpawnPlatforms()
+	{
+		// Random Number Generation determining platform Spawning  //
+		//		Seeds random value for determining what platform to spawn next
+		_RandomPlatformToSpawn = Random.Range(0, PlatformHolder.Length);
+		
+		// 		Seeds random number to create a buffer between both platforms
+		_PlatformSpawnBuffer = Random.Range(minPlatformSpawnBuffer, maxPlatformSpawnBuffer);
+
+		//		Seeds random value to determine how high the platforms will spawn'
+		_PlatformSpawnVertBuffer = Random.Range(minPlatformSpawnHeight, maxPlatformSpawnHeight);
+	
+	
+		// Platform Spawning Logic
+		// Store the current platform location in 3D Space
+		_CurPlatformPosition = _WhatIsCurrentPlatform.transform.position;
+		
+		// Get Half of the width of the current platform
+		_CurPlatformHalfWidth = _WhatIsCurrentPlatform.transform.localScale.x / 2;
+
+		// Loads next platform into what's next
+		//		Determined by a random number
+		_WhatIsNextPlatform = PlatformHolder[_RandomPlatformToSpawn];
+
+		// Get next platforms half of the width
+		_NextPlatformHalfWidth = _WhatIsNextPlatform.transform.localScale.x / 2;
+
+		// math to determine the distance of where to place the newly generated platforms //
+		//		By using half of the width of the current and next platform, this will generate the minimum distance
+		//		the platforms can spawn. Thus allowing a buffer in between the platforms to allow gaps in between
+		//		without risk of the platforms overlaping.
+		_TotalPlatformWidths = _CurPlatformHalfWidth + _NextPlatformHalfWidth + _PlatformSpawnBuffer;
+
+
+		// Initiates platform spawning into the game scene	
+		// Creates a new vector2 position for the platform to spawn to
+		_NextPlatformNewSpawnLocation += new Vector2 (_CurPlatformPosition.x + _TotalPlatformWidths, _PlatformSpawnVertBuffer);
+
+		// Sets the newly spawned platform as the current platform
+		_WhatIsCurrentPlatform = _WhatIsNextPlatform;
+
+		// Instantiate's the new platform
+		Instantiate(_WhatIsNextPlatform, _NextPlatformNewSpawnLocation, Quaternion.identity);		
+	}
+
+
 }
 
 
