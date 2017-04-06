@@ -21,6 +21,9 @@ public class PlatformSpawner : MonoBehaviour
 	public int minPlatformSpawnHeight = -5;		// minimum height platforms will spawn
 	public int maxPlatformSpawnHeight = 5;		// Maximum height platforms will spawn
 
+	[HeaderAttribute ("Random Number Generation by Seed")]
+	//public RNG_Seed_Generation seed;
+
 
 
 	// Private Variables //
@@ -85,6 +88,9 @@ public class PlatformSpawner : MonoBehaviour
 
 	void SpawnPlatforms()
 	{
+		// Seeds random value
+		//Random.InitState(seed.SeedRandomNumberByDate());
+		
 		// Random Number Generation determining platform Spawning  //
 		//		Seeds random value for determining what platform to spawn next
 		_RandomPlatformToSpawn = Random.Range(0, PlatformHolder.Length);
@@ -93,7 +99,9 @@ public class PlatformSpawner : MonoBehaviour
 		_PlatformSpawnBuffer = Random.Range(minPlatformSpawnBuffer, maxPlatformSpawnBuffer);
 
 		//		Seeds random value to determine how high the platforms will spawn'
-		_PlatformSpawnVertBuffer = Random.Range(minPlatformSpawnHeight, maxPlatformSpawnHeight);
+		_PlatformSpawnVertBuffer = Random.Range(minPlatformSpawnHeight, maxPlatformSpawnHeight);		
+
+		
 	
 	
 		// Platform Spawning Logic
