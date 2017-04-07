@@ -21,10 +21,19 @@ public class IchiroController : MonoBehaviour
 
     // Private variables
 
+    // Game Input
+    //  Keycode input for each of the inputs
+    private string _upAction = "UpAction";
+    private string _downAction = "DownAction";
+    private string _leftAction = "LeftAction";
+    private string _rightArrow = "RightAction";
+
+
     // Player physics
-    private bool facingRight;       		// Weather the player is facing right or not
-	private bool isGrounded    = false; 	// If the player is grounded or not
-	private float groundRadius = 0.2f;		// The radius of the grounded circle
+    private bool _facingRight;       	    	// Weather the player is facing right or not
+	private bool _isGrounded        = false; 	// If the player is grounded or not
+	private bool _isClimbingWall    = false;    // If the player is currently climbing a wall
+	private float _groundRadius     = 0.2f;		// The radius of the grounded circle
 
 	// Player Controller
 	private float move;				// Stores player movement data
@@ -50,10 +59,10 @@ public class IchiroController : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
 
         // Ensures the player is defaulted to facing right
-        facingRight = true;
+        _facingRight = true;
 
         // Defaults the player being grounded to false
-        isGrounded = false;
+        _isGrounded = false;
     }
 
     // Fixed Update - For Physics
@@ -67,8 +76,8 @@ public class IchiroController : MonoBehaviour
         // Checks weahter the player is currently grounded or not using a collider circle
         // Returns a bool if grounded or not
         //isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
-        anim.SetBool("OnGround", isGrounded);
+		_isGrounded = Physics2D.OverlapCircle(groundCheck.position, _groundRadius, whatIsGround);
+        anim.SetBool("OnGround", _isGrounded);
 
         // Toggles weather the player is automatically running or not
         if (playerAutoRun)
@@ -92,7 +101,7 @@ public class IchiroController : MonoBehaviour
         }
         
         // Flips the player in regards to where they're moving and if they're facing right or not
-        if (move > 0 && !facingRight || move < 0 && facingRight)
+        if (move > 0 && !_facingRight || move < 0 && _facingRight)
         {
             flip();
         }
@@ -100,12 +109,16 @@ public class IchiroController : MonoBehaviour
 
 	private void Update()
 	{
+        // Function Variables //
+
 		// Stores weather the player pressed jump that frame
-		jump = Input.GetButton("Jump");
-		
-         
+		jump = Input.GetButton(_upAction);
+
+
+        // Jump Logic //
+
 		// Checks if the player is grounded and is jumping
-		if (isGrounded && jump)
+		if (_isGrounded && jump)
 		{
             // Player is now jumping - Pushes player upwards
 		    rb2D.velocity = Vector2.up * jumpForce; // Calls Jump Functions
@@ -127,12 +140,41 @@ public class IchiroController : MonoBehaviour
             // Player is falling
             rb2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;   
         }
+
+
+
+        // Wall Climb logic //
+        if (_isClimbingWall && Input.GetButton(_upAction))
+        {
+            Debug.Log("Player climbing wall");
+            // automatically moves the player
+            rb2D.velocity = new Vector2(0 ,1 * MaxMovementSpeed); 
+        }
+
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Wall climb logic
+        //  If the player has collided with the wall climb object 
+        if (collision.gameObject.tag == "Climb")
+        {
+            // Player is climbing the wall
+            _isClimbingWall = true;
+        }
+
         // If the player gets caught by Yumi...
         // End game
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // Wall Climb Logic
+        //  If player isn't touching wall cliimb 
+        if (collision.gameObject.tag == "Climb")
+        {
+            _isClimbingWall = false;
+        }
     }
 
 
@@ -145,7 +187,7 @@ public class IchiroController : MonoBehaviour
     void flip()
     {
         // Sets facing right to the opposite of what it currently is
-        facingRight = !facingRight;
+        _facingRight = !_facingRight;
 
         // Stores the local scale of the player
         Vector3 theScale = transform.localScale;
@@ -156,7 +198,6 @@ public class IchiroController : MonoBehaviour
         // Sets the localscale to what theScale currently is
         transform.localScale = theScale;
     } 
-    
 
     // When the player has been caught by Yumi
     void Caught()
