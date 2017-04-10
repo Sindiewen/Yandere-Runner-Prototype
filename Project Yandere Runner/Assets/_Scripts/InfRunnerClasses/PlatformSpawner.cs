@@ -13,6 +13,8 @@ public class PlatformSpawner : MonoBehaviour
 	[Header ("Platform Spawner Atributes")]
 	public GameObject[] PlatformHolder;		// Holds the platforms for the game to spawn in
 
+	public int numOfPlatformsToSpawn;		// Stores an int for how many plaatforms to spawn into the world
+
 	[Header ("Horizontal Platform Spawn Buffer")]
 	public int minPlatformSpawnBuffer = 0;		// Minimum platform spawn buffer between platforms
 	public int maxPlatformSpawnBuffer = 10;		// Maximum platform spawn buffer between platforms
@@ -53,7 +55,7 @@ public class PlatformSpawner : MonoBehaviour
 		SpawnFirstPlatform();
 
 		// Spawns 20 platforms initially
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < numOfPlatformsToSpawn; i++)
 		{
 			SpawnPlatforms();
 		}

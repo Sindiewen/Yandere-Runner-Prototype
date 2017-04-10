@@ -38,6 +38,7 @@ public class IchiroController : MonoBehaviour
 	// Player Controller
 	private float move;				// Stores player movement data
 	private bool jump;				// Stores weather the player is jumping or not
+	public bool wallClimb;          // Stores weather the player is climbing the wall
 
     // Player Animation
     private Animator anim;          // Reference to the player's Animator component
@@ -111,8 +112,9 @@ public class IchiroController : MonoBehaviour
 	{
         // Function Variables //
 
-		// Stores weather the player pressed jump that frame
-		jump = Input.GetButton(_upAction);
+		// Player Input definitions
+		jump = Input.GetButton(_upAction);          // Player is jumping
+        wallClimb = Input.GetButton(_upAction);     // player is climbing wall
 
 
         // Jump Logic //
@@ -144,11 +146,13 @@ public class IchiroController : MonoBehaviour
 
 
         // Wall Climb logic //
-        if (_isClimbingWall && Input.GetButton(_upAction))
+        if (_isClimbingWall && wallClimb)
         {
             Debug.Log("Player climbing wall");
             // automatically moves the player
             rb2D.velocity = new Vector2(0 ,1 * MaxMovementSpeed); 
+
+            //TODO: Set animation state to climbing wall
         }
 
 	}
@@ -174,6 +178,9 @@ public class IchiroController : MonoBehaviour
         if (collision.gameObject.tag == "Climb")
         {
             _isClimbingWall = false;
+            rb2D.velocity = new Vector2(0,0);
+
+            // Set animation state to returning to running state
         }
     }
 
@@ -198,6 +205,8 @@ public class IchiroController : MonoBehaviour
         // Sets the localscale to what theScale currently is
         transform.localScale = theScale;
     } 
+
+
 
     // When the player has been caught by Yumi
     void Caught()

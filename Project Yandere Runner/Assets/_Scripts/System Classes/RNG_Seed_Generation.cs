@@ -46,7 +46,7 @@ public class RNG_Seed_Generation : MonoBehaviour
 
 
 		// Seeds random level if the day is different
-		SeedRandomNumberByDate();
+		//SeedRandomNumberByDate();
 
 		
 		}
