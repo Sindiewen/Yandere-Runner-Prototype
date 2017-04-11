@@ -38,7 +38,7 @@ public class IchiroController : MonoBehaviour
 	// Player Controller
 	private float move;				// Stores player movement data
 	private bool jump;				// Stores weather the player is jumping or not
-	public bool wallClimb;          // Stores weather the player is climbing the wall
+	private bool wallClimb;          // Stores weather the player is climbing the wall
 
     // Player Animation
     private Animator anim;          // Reference to the player's Animator component
@@ -123,7 +123,7 @@ public class IchiroController : MonoBehaviour
 		if (_isGrounded && jump)
 		{
             // Player is now jumping - Pushes player upwards
-		    rb2D.velocity = Vector2.up * jumpForce; // Calls Jump Functions
+		    rb2D.velocity = Vector2.up * jumpForce; // Jumps upwards
         }
 		
         
