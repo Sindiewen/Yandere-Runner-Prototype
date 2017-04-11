@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -158,6 +157,8 @@ public class YumiContoller : MonoBehaviour
     }
     
 }
+
+/* 
 =======
 ﻿using System.Collections;
 using System.Collections.Generic;
@@ -313,3 +314,4 @@ public class YumiContoller : MonoBehaviour
     
 }
 >>>>>>> master
+*/
