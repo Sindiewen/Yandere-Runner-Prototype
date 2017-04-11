@@ -50,10 +50,11 @@ public class YumiContoller : MonoBehaviour
     private Animator _anim;
     private Rigidbody2D _rb2D;
 
-    private bool _jump;
-    private bool _isClimbingWall = false;
-    private bool _isGrounded;
-    private float _groundRadius = 0.2f;
+
+    private bool _canStartRunning = false;
+    private bool _isClimbingWall = false;       // CHecks if player is currently climbing a wall
+    private bool _isGrounded;                   // Checks if the player ia currently grounded
+    private float _groundRadius = 0.2f;         // The ground radius for the groundcheck
 
 
     private void Start()
@@ -61,26 +62,34 @@ public class YumiContoller : MonoBehaviour
         // Gets references to the components
         _anim = GetComponent<Animator>();
         _rb2D = GetComponent<Rigidbody2D>();
-
-
+        
         // Player starts grounded
         _isGrounded = false;
+        
+        // Player can't start running immediatly
+        _canStartRunning = false;
+
+        // Player will start running after 3 seconds
+        Invoke("startRunning", 3.0f);
     }
 
     private void FixedUpdate()
     {
-        // Checks weahter the player is currently grounded or not using a collider circle
-        // Returns a bool if grounded or not
-        //isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-        _isGrounded = Physics2D.OverlapCircle(groundCheck.position, _groundRadius, whatIsGround);
-        _anim.SetBool("OnGround", _isGrounded);
+        if (_canStartRunning)
+        {
+            // Checks weahter the player is currently grounded or not using a collider circle
+            // Returns a bool if grounded or not
+            //isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+            _isGrounded = Physics2D.OverlapCircle(groundCheck.position, _groundRadius, whatIsGround);
+            _anim.SetBool("OnGround", _isGrounded);
 
-        // automatically moves the player
-        _rb2D.velocity = new Vector2(1 * maxMovementSpeed, _rb2D.velocity.y);
+            // automatically moves the player
+            _rb2D.velocity = new Vector2(1 * maxMovementSpeed, _rb2D.velocity.y);
 
-        // Sets the float value of the animator's Speed to allow the player animation to play
-        // Mathf.abs gets the absolute value --- 1 = 1, -1 = 1
-        _anim.SetFloat("Speed", Mathf.Abs(1));
+            // Sets the float value of the animator's Speed to allow the player animation to play
+            // Mathf.abs gets the absolute value --- 1 = 1, -1 = 1
+            _anim.SetFloat("Speed", Mathf.Abs(1));
+        }
     }
 
     // Update is called once per frame
@@ -154,6 +163,12 @@ public class YumiContoller : MonoBehaviour
         }
 
 
+    }
+
+    // Player can start running
+    private void startRunning()
+    {
+        _canStartRunning = true;
     }
     
 }
