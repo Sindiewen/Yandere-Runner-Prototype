@@ -79,12 +79,14 @@ public class System_SaveLoadData : MonoBehaviour
 		SeedGen.PreviousDateYear = data.PreviousRunDateYear;
 		SeedGen.seed = data.seed;
 
+		/* 
 		Debug.Log ("Loading data to file");
 		Debug.Log ("Loaded Date: " 
 		+ data.PreviousRunDateMonth + "-" 
 		+ data.PreviousRunDateDay + "-"
 		+ data.PreviousRunDateYear);
 		Debug.Log ("Loading Seed: " + data.seed);
+		*/
 	}
 
 

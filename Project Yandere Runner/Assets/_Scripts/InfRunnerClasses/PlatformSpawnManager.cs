@@ -7,7 +7,7 @@ using UnityEngine;
  * Attach to a singletons object to spawn platform
  */
 
-public class PlatformSpawner : MonoBehaviour
+public class PlatformSpawnManager : MonoBehaviour
 {
 	// Public Variables
 	[Header ("Platform Spawner Atributes")]
@@ -27,22 +27,32 @@ public class PlatformSpawner : MonoBehaviour
 	//public RNG_Seed_Generation seed;
 
 
+	// Public hidden variables
+	// Counts how many platforms are currently in the scene
+	[HideInInspector]
+	public int _numOfTotalSpawnedPlatforms = 0;
+
+
+
 
 	// Private Variables //
 
+	// Platform Data Structure 
+	//	Gets current and next platform
 	private GameObject _WhatIsCurrentPlatform;			// Stores the current platform
 	private GameObject _WhatIsCurrentPlatformClone;		// Clone of the current platform
 	private GameObject _WhatIsNextPlatform;				// Stores the next platform to spawn
 	private GameObject _WhatIsNextPlatformClone;		// Clone of the current platform;
 
 
+	// Platform Position Management
 	private Vector2 _CurPlatformPosition;				// Stores the current platform location
-	private float _CurPlatformHalfWidth;				// Stores the current platforms half of the width 
-	
+	private float _CurPlatformHalfWidth;				// Stores the current platforms half of the width 	
 	private float _NextPlatformHalfWidth;				// Stores the next platforms half of the width
 	private Vector2 _NextPlatformNewSpawnLocation;		// Stores a location for the next platfor to spawn to
 
 	
+	// Platform Spawn Management
 	private float _TotalPlatformWidths;					// Stores the toral platform Widths for both the current and next platform
 	private int _PlatformSpawnBuffer;					// The bufferm distance the platforms will spawn away from each other
 	private int _PlatformSpawnVertBuffer;				// The Buffer of how high the platforms can spawn
@@ -57,24 +67,27 @@ public class PlatformSpawner : MonoBehaviour
 		// Spawns 20 platforms initially
 		for(int i = 0; i < numOfPlatformsToSpawn; i++)
 		{
-			SpawnPlatforms();
+			SpawnPlatform();
 		}
-
-
 	}
 	
-	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
-
+		// Checks if the total number of platforms has decresed
+		// If so, spawn platforms back to that number
+		if (_numOfTotalSpawnedPlatforms < numOfPlatformsToSpawn)
+		{
+			// Spawns new platform
+			SpawnPlatform();
+		}
 	}
 	
 
-
+	
 	// Platform Spawner Functions //
 
 	// Spawns the first platform
-	void SpawnFirstPlatform()
+	private void SpawnFirstPlatform()
 	{
 		// Creates an origin point for the initial platform to start at.
 		Vector2 Origin = new Vector2 (0,0);			
@@ -86,9 +99,12 @@ public class PlatformSpawner : MonoBehaviour
 
 		// Spawn the platform at origin - 0,0
 		Instantiate(_WhatIsCurrentPlatformClone, Origin, Quaternion.identity);
+
+		// Iterates number of platforms in the scene
+		_numOfTotalSpawnedPlatforms++;
 	}
 
-	void SpawnPlatforms()
+	public void SpawnPlatform()
 	{
 		// Seeds random value
 		//Random.InitState(seed.SeedRandomNumberByDate());
@@ -106,7 +122,7 @@ public class PlatformSpawner : MonoBehaviour
 		
 	
 	
-		// Platform Spawning Logic
+		// Platform Spawning Logic //
 		// Store the current platform location in 3D Space
 		_CurPlatformPosition = _WhatIsCurrentPlatform.transform.position;
 		
@@ -136,6 +152,14 @@ public class PlatformSpawner : MonoBehaviour
 
 		// Instantiate's the new platform
 		Instantiate(_WhatIsNextPlatform, _NextPlatformNewSpawnLocation, Quaternion.identity);		
+
+		// iterates number of platforms in the scene
+		_numOfTotalSpawnedPlatforms++;
+	}
+
+	public void DespawnPlatform()
+	{
+		// Despawns the current platform
 	}
 
 

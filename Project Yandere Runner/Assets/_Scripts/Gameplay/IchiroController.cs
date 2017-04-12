@@ -148,7 +148,7 @@ public class IchiroController : MonoBehaviour
         // Wall Climb logic //
         if (_isClimbingWall && wallClimb)
         {
-            Debug.Log("Player climbing wall");
+            //Debug.Log("Player climbing wall");
             // automatically moves the player
             rb2D.velocity = new Vector2(0 ,1 * MaxMovementSpeed); 
 

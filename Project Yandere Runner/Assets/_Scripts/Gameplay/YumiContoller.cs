@@ -10,6 +10,7 @@ public class YumiContoller : MonoBehaviour
     // Player Movement
     [HeaderAttribute("Movement Values")]
     public float maxMovementSpeed = 5;
+    public float startDelay;
 
     // Jump values
     [HeaderAttribute("Jump Values")]
@@ -34,6 +35,7 @@ public class YumiContoller : MonoBehaviour
     public float wallCheckRayX;     // For the wallcheck Raycast - X
     [RangeAttribute(-1.0f, 1.0f)]
     public float wallCheckRayY;     // For the wallCehck Raycact - Y
+
 
     // Private Variables //
 
@@ -70,7 +72,7 @@ public class YumiContoller : MonoBehaviour
         _canStartRunning = false;
 
         // Player will start running after 3 seconds
-        Invoke("startRunning", 3.0f);
+        Invoke("startRunning", startDelay);
     }
 
     private void FixedUpdate()
@@ -161,8 +163,6 @@ public class YumiContoller : MonoBehaviour
 
             // Set animation state to returning to running state
         }
-
-
     }
 
     // Player can start running
