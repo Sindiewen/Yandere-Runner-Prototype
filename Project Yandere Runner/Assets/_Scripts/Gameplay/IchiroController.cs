@@ -19,6 +19,13 @@ public class IchiroController : MonoBehaviour
     public Transform groundCheck;   // Stores a transform of a Groundcheck object
 	public LayerMask whatIsGround;  // Allows choice for choosing what the ground currently is
 
+    [HeaderAttribute("Player Actions")]
+    public float dashDistance = 1.0f;       // Sets how far the player will dash
+    public float dashCooldown = 5.0f;       // How long the cooldown for the dash will be
+
+    [HeaderAttribute("Platform Spawner")]
+    public PlatformSpawnManager platformSpawner;    // Reference to the platform spawn manager
+
     // Private variables
 
     // Game Input
@@ -26,7 +33,7 @@ public class IchiroController : MonoBehaviour
     private string _upAction = "UpAction";
     private string _downAction = "DownAction";
     private string _leftAction = "LeftAction";
-    private string _rightArrow = "RightAction";
+    private string _rightAction = "RightAction";
 
 
     // Player physics
@@ -38,11 +45,15 @@ public class IchiroController : MonoBehaviour
 	// Player Controller
 	private float move;				// Stores player movement data
 	private bool jump;				// Stores weather the player is jumping or not
-	private bool wallClimb;          // Stores weather the player is climbing the wall
+	private bool wallClimb;         // Stores weather the player is climbing the wall
+    private bool dash;              // Stores weather the player can dash
 
     // Player Animation
     private Animator anim;          // Reference to the player's Animator component
     private Rigidbody2D rb2D;       // Reference to the player's Rigidbody2D Component
+
+    // Cooldown timers
+    private float _dashCooldownStart = 0f;   // Cooldown timer for the player dash
 
 
 
@@ -113,8 +124,10 @@ public class IchiroController : MonoBehaviour
         // Function Variables //
 
 		// Player Input definitions
-		jump = Input.GetButton(_upAction);          // Player is jumping
-        wallClimb = Input.GetButton(_upAction);     // player is climbing wall
+		jump = Input.GetButtonDown(_upAction);          // Player is jumping
+        wallClimb = Input.GetButton(_upAction);         // player is climbing wall
+        dash = Input.GetButtonDown(_rightAction);       // Player is dashing
+
 
 
         // Jump Logic //
@@ -155,6 +168,18 @@ public class IchiroController : MonoBehaviour
             //TODO: Set animation state to climbing wall
         }
 
+
+
+
+
+
+        // Dash Logic 
+        if (dash)
+        {
+            // Player is now dashing
+            playerDash();
+        }
+
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -165,6 +190,18 @@ public class IchiroController : MonoBehaviour
         {
             // Player is climbing the wall
             _isClimbingWall = true;
+        }
+
+
+        // Platform Spawn Logic
+        // If player exceeds platform spawner, spawn in new platforms
+        if (collision.gameObject.tag == "Platform Spawner")
+        {
+            for(int i = 0; i < platformSpawner.numOfPlatformsToSpawn; i++)
+            {
+                // Spawn in a new set of platforms into the scene
+                platformSpawner.SpawnPlatform();
+            }
         }
 
         // If the player gets caught by Yumi...
@@ -205,6 +242,17 @@ public class IchiroController : MonoBehaviour
         // Sets the localscale to what theScale currently is
         transform.localScale = theScale;
     } 
+
+
+    // Player Dash
+    void playerDash()
+    {  
+        //Vector2 newDashDistance = new Vector2 (dashDistance, 0);
+        // Dashes the plater forward
+        //this.transform.Translate(dashDistance * Time.deltaTime, 0, 0);
+        rb2D.AddForce(Vector2.right * dashDistance);
+        //Vector2.Lerp(this.transform.position, newDashDistance, 1.0f);
+    }
 
 
 

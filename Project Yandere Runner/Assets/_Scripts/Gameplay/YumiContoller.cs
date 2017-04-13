@@ -135,11 +135,7 @@ public class YumiContoller : MonoBehaviour
         {
             // Player climbs the wall
             _rb2D.velocity = new Vector2(0, 1 * maxMovementSpeed);
-        }
-
-
-        
-        
+        } 
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
