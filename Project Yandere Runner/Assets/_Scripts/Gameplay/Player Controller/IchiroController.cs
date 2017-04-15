@@ -26,6 +26,11 @@ public class IchiroController : MonoBehaviour
     [HeaderAttribute("Platform Spawner")]
     public PlatformSpawnManager platformSpawner;    // Reference to the platform spawn manager
 
+
+    //UI management
+    [HeaderAttribute ("UI")]
+    //public UI_Manager UI;                       // Reference to the UI Manager script
+
     // Private variables
 
     // Game Input
@@ -124,7 +129,7 @@ public class IchiroController : MonoBehaviour
         // Function Variables //
 
 		// Player Input definitions
-		jump = Input.GetButtonDown(_upAction);          // Player is jumping
+		jump = Input.GetButton(_upAction);          // Player is jumping
         wallClimb = Input.GetButton(_upAction);         // player is climbing wall
         dash = Input.GetButtonDown(_rightAction);       // Player is dashing
 
@@ -137,6 +142,10 @@ public class IchiroController : MonoBehaviour
 		{
             // Player is now jumping - Pushes player upwards
 		    rb2D.velocity = Vector2.up * jumpForce; // Jumps upwards
+		
+		     // Sets animation state to false
+            anim.SetBool("OnGround", false);
+            
         }
 		
         
@@ -144,9 +153,6 @@ public class IchiroController : MonoBehaviour
         // Better Jumpng in Unity with Four Lines of Code
         if (rb2D.velocity.y < 0)    // If player is jumping
         {
-            // Sets animation state to false
-            anim.SetBool("OnGround", false);
-            
             // THe player is jumping
             rb2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
@@ -169,10 +175,6 @@ public class IchiroController : MonoBehaviour
         }
 
 
-
-
-
-
         // Dash Logic 
         if (dash)
         {
@@ -181,7 +183,6 @@ public class IchiroController : MonoBehaviour
         }
 
 	}
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Wall climb logic
@@ -193,6 +194,15 @@ public class IchiroController : MonoBehaviour
         }
 
 
+        
+
+        // If the player gets caught by Yumi...
+        // End game
+    }
+    
+    // If the player collides with a trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         // Platform Spawn Logic
         // If player exceeds platform spawner, spawn in new platforms
         if (collision.gameObject.tag == "Platform Spawner")
@@ -204,9 +214,18 @@ public class IchiroController : MonoBehaviour
             }
         }
 
-        // If the player gets caught by Yumi...
-        // End game
-    }
+        // If player collides with a coin object via Tag
+        if(collision.gameObject.tag == "Pickup_Coin")
+        {
+            // destroy coin object
+            Destroy(collision.gameObject);
+
+            // Add 1 to total coin count
+            //UI.coinCount += 1;
+
+            //Debug.Log("Total Coin Count: " + UI.coinCount.ToString());
+        }
+    } 
 
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -250,8 +269,9 @@ public class IchiroController : MonoBehaviour
         //Vector2 newDashDistance = new Vector2 (dashDistance, 0);
         // Dashes the plater forward
         //this.transform.Translate(dashDistance * Time.deltaTime, 0, 0);
-        rb2D.AddForce(Vector2.right * dashDistance);
-        //Vector2.Lerp(this.transform.position, newDashDistance, 1.0f);
+        //rb2D.AddForce(Vector2.right * dashDistance);
+
+        // TODO: Instead of forcing player forwards, greatly increase player speed temporarily
     }
 
 
