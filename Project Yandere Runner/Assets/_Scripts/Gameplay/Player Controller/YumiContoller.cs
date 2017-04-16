@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class YumiContoller : MonoBehaviour
+public class YumiContoller : InfRunnerController
 {
 
+    /*
     // Public Variables
 
     // Player Movement
@@ -58,23 +59,28 @@ public class YumiContoller : MonoBehaviour
     private bool _isGrounded;                   // Checks if the player ia currently grounded
     private float _groundRadius = 0.2f;         // The ground radius for the groundcheck
 
+    */
 
-    private void Start()
+    private void Awake()
     {
         // Gets references to the components
-        _anim = GetComponent<Animator>();
-        _rb2D = GetComponent<Rigidbody2D>();
+        _Anim = GetComponent<Animator>();
+        _rb2d = GetComponent<Rigidbody2D>();
         
+        
+        /*
         // Player starts grounded
         _isGrounded = false;
         
         // Player can't start running immediatly
         _canStartRunning = false;
+        */
 
-        // Player will start running after 3 seconds
-        Invoke("startRunning", startDelay);
+        // Player will start running after a set period seconds
+        //Invoke("startRunning", startDelay);
     }
 
+    /*
     private void FixedUpdate()
     {
         if (_canStartRunning)
@@ -137,6 +143,8 @@ public class YumiContoller : MonoBehaviour
             _rb2D.velocity = new Vector2(0, 1 * maxMovementSpeed);
         } 
     }
+
+    */
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -155,17 +163,19 @@ public class YumiContoller : MonoBehaviour
         if (collision.gameObject.tag == "Climb")
         {
             _isClimbingWall = false;
-            _rb2D.velocity = new Vector2(0, 0);
+            _rb2d.velocity = new Vector2(0, 0);
 
             // Set animation state to returning to running state
         }
     }
 
+    /*
     // Player can start running
     private void startRunning()
     {
         _canStartRunning = true;
     }
+    */
     
 }
 

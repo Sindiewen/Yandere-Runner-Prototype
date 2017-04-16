@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Player Controller for Ichiro
-public class IchiroController : MonoBehaviour
+public class IchiroController : InfRunnerController 
 {
+    /*
 
     [Header("Player Movement Values")]
     public float MaxMovementSpeed = 5;  // The players movement speed
@@ -59,7 +60,7 @@ public class IchiroController : MonoBehaviour
 
     // Cooldown timers
     private float _dashCooldownStart = 0f;   // Cooldown timer for the player dash
-
+    */
 
 
 
@@ -69,19 +70,24 @@ public class IchiroController : MonoBehaviour
 
     // UnityEngine Functions //
 
-    void Start()
+    private void Awake()
     {
         // Gets the componenets of the player
-        anim = GetComponent<Animator>();
-        rb2D = GetComponent<Rigidbody2D>();
+        _Anim = GetComponent<Animator>();
+        _rb2d = GetComponent<Rigidbody2D>();
 
+        /*
         // Ensures the player is defaulted to facing right
         _facingRight = true;
 
         // Defaults the player being grounded to false
         _isGrounded = false;
-    }
+        */
 
+        // Player will start running after a set period seconds
+        //Invoke("startRunning", startDelay);
+    }
+    /*
     // Fixed Update - For Physics
     private void FixedUpdate()
     {
@@ -183,6 +189,9 @@ public class IchiroController : MonoBehaviour
         }
 
 	}
+    */
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Wall climb logic
@@ -192,9 +201,6 @@ public class IchiroController : MonoBehaviour
             // Player is climbing the wall
             _isClimbingWall = true;
         }
-
-
-        
 
         // If the player gets caught by Yumi...
         // End game
@@ -234,7 +240,7 @@ public class IchiroController : MonoBehaviour
         if (collision.gameObject.tag == "Climb")
         {
             _isClimbingWall = false;
-            rb2D.velocity = new Vector2(0,0);
+            _rb2d.velocity = new Vector2(0,0);
 
             // Set animation state to returning to running state
         }
@@ -242,7 +248,7 @@ public class IchiroController : MonoBehaviour
 
 
 
-
+    /*
     // Player Movement Functions
 
 
@@ -273,7 +279,7 @@ public class IchiroController : MonoBehaviour
 
         // TODO: Instead of forcing player forwards, greatly increase player speed temporarily
     }
-
+    */
 
 
     // When the player has been caught by Yumi
