@@ -5,6 +5,18 @@ using UnityEngine;
 public class InfRunnerController : MonoBehaviour 
 {
 
+    // Enums
+    //  Defines the playmode of the game using enums
+    public enum PlayerMode 
+    {
+        runnerIchiro = 0,
+        chaserYumi = 1
+    };
+
+    // Public Variables
+    [HeaderAttribute("Player Definitions")]
+    public PlayerMode curPlayerMode;                // What the player will currently be when played
+
 	[HeaderAttribute("Player Movement")]
 	public bool playerAutoRun 		= false;		// Weather player will automatically Run
     public float startDelay         = 0.0f;         // Sets a delay for when the player will start moving
@@ -35,14 +47,14 @@ public class InfRunnerController : MonoBehaviour
                                                     // CHecks if player is about touch a wall to they can initiate a jump
     public LayerMask whatIsWall;                    // Chooses what the wall layer is
     [RangeAttribute(-1.0f, 1.0f)]
-    public float pitCheckRayX;                      // For the pitcheck Raycast - X
+    public float pitCheckRayX;                      // For the pitcheck Raycast - X : Defines x angle
     [RangeAttribute(-1.0f, 1.0f)]
-    public float pitCheckRayY;                      // For the pitcheck Raycast - Y
+    public float pitCheckRayY;                      // For the pitcheck Raycast - Y : Defines y angle
 
     [RangeAttribute(-1.0f, 1.0f)]
-    public float wallCheckRayX;                     // For the wallcheck Raycast - X
+    public float wallCheckRayX;                     // For the wallcheck Raycast - X : defines X Angle
     [RangeAttribute(-1.0f, 1.0f)]
-    public float wallCheckRayY;                     // For the wallCehck Raycact - Y
+    public float wallCheckRayY;                     // For the wallCehck Raycact - Y : defines Y Angle
 
 
 
@@ -84,6 +96,16 @@ public class InfRunnerController : MonoBehaviour
     private bool _facingRight       = true;     // Checks weather the player is facing right
     private bool _isGrounded        = false;    // Checks weather the player is currently grounded
     private float _groundRadius      = 0.2f;    // The ground radius - how close the player needs to be to the ground to be considered "grounded"
+    
+    // Player Raycast Logic //
+    //  For Yumi, for doing jump logic
+    private RaycastHit2D _YumiPitRay;           // Checks if Yumi has hit a pit
+    private RaycastHit2D _yumiWallRay;          // Checks if yumi raycast has hit a wall
+    
+    // Player Raycast angle
+    //   For Yumi, The angle of the rays
+    private Vector2 _yumiFrontPitRayAngle;      // The angle of the pit ray
+    private Vector2 _yumiFrontWallRayAngle;     // The angle of the wall ray    
 
     
     
@@ -104,7 +126,7 @@ public class InfRunnerController : MonoBehaviour
 
 
         // Invoke - Player will start running after a set time
-        Invoke("startRunning", startDelay);
+        //Invoke("startRunning", startDelay);
 	}
 
 
@@ -155,9 +177,6 @@ public class InfRunnerController : MonoBehaviour
     }
 
 
-
-
-
     // Update is called once per frame
     void Update ()
     {
@@ -167,54 +186,104 @@ public class InfRunnerController : MonoBehaviour
         _playerWallClimb    = Input.GetButton(_upAction);       // Stores the upAction to the player wall climb
         _playerDash         = Input.GetButton(_rightAction);    // Stores the rightAction to the player dash
 
-
-        // Jump Logic //
-        //  
-        // Implements by adding force upwards and using the Better Jumping in Unity with Four Lines of Code
-        // to smooth out the jumping
-        // Checks if the player is grounded and jumping
-        if (_isGrounded && _playerJump)
-        {
-            // Player is jumping - adds velocity upwards for the player to jump
-            _rb2d.velocity = Vector2.up * jumpForce;
-
-            // Sets animation jump state to false
-            _Anim.SetBool("OnGround", false);
-        }
         
-        // Better jump from youtube
-        if (_rb2d.velocity.y < 0) // If the player is jumping
+        // If the player is runnerIchiro
+        if (curPlayerMode == PlayerMode.runnerIchiro)
         {
-            // The player is currently jumping
-            _rb2d.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        }
-        else if (_rb2d.velocity.y > 0 && !_playerJump)  // Player is no longer jumping/falling
-        {
-            // Player is falling
-            _rb2d.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
-        }
+            // Jump Logic //
+            //  
+            // Implements by adding force upwards and using the Better Jumping in Unity with Four Lines of Code
+            // to smooth out the jumping
+            // Checks if the player is grounded and jumping
+            if (_isGrounded && _playerJump)
+            {
+                // Player is jumping - adds velocity upwards for the player to jump
+                _rb2d.velocity = Vector2.up * jumpForce;
 
-
-
-        // Wall Climb Logic
-        //
-        // If the player is currently holding the up action and is up against the wall
-        if (_isClimbingWall && _playerWallClimb)
-        {
-            // Moves the player upwards
-            _rb2d.velocity = new Vector2(0, 1 * maxMovementSpeed);
+                // Sets animation jump state to false
+                _Anim.SetBool("OnGround", false);
+            }
             
-            // TODO: Give the player a climbing animation and set the animation to slow the player climbing
+            // Better jump from youtube
+            if (_rb2d.velocity.y < 0) // If the player is jumping
+            {
+                // The player is currently jumping
+                _rb2d.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            }
+            else if (_rb2d.velocity.y > 0 && !_playerJump)  // Player is no longer jumping/falling
+            {
+                // Player is falling
+                _rb2d.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            }
+
+
+
+            // Wall Climb Logic
+            //
+            // If the player is currently holding the up action and is up against the wall
+            if (_isClimbingWall && _playerWallClimb)
+            {
+                // Moves the player upwards
+                _rb2d.velocity = new Vector2(0, 1 * maxMovementSpeed);
+                
+                // TODO: Give the player a climbing animation and set the animation to slow the player climbing
+            }
+
+
+            // Player dash logic //
+            //
+            // If the player presses the right action, they can dash
+            if (_playerDash)
+            {
+                // Player is now dashing
+                playerIsDashing();
+            }
         }
-
-
-        // Player dash logic //
-        //
-        // If the player presses the right action, they can dash
-        if (_playerDash)
+        // If the playermode is chaserYumi
+        else if (curPlayerMode == PlayerMode.chaserYumi)
         {
-            // Player is now dashing
-            playerIsDashing();
+            // Defines raycast values for wall the jump point
+            //  This transform's location, where, distance to wall/jump point, and what is defined as wall
+            _YumiPitRay = Physics2D.Raycast(this.transform.position, _yumiFrontPitRayAngle, groundRayDistance, whatIsGround);
+            _yumiWallRay = Physics2D.Raycast(this.transform.position, _yumiFrontWallRayAngle, wallRayDistance, whatIsWall);
+
+            // Sets the angle of the raycast
+            _yumiFrontPitRayAngle = new Vector2(pitCheckRayX, pitCheckRayY);
+            _yumiFrontWallRayAngle = new Vector2(wallCheckRayX, wallCheckRayY);
+
+            // Draws the rays in the scene view
+            Debug.DrawRay(this.transform.position, _yumiFrontPitRayAngle, Color.red);
+            Debug.DrawRay(this.transform.position, _yumiFrontWallRayAngle, Color.green);
+            
+            // If yumi's raycast is no longer touching the ground (raycast is hitting nothing, like a pit)
+            //  or her front ray has hit a wall, Yumi will jump.
+            if (!_YumiPitRay && _isGrounded || _yumiWallRay && _isGrounded)
+            {
+                // Yumi automatically jumps
+                _rb2d.velocity = Vector2.up * jumpForce;
+
+                // Changes animation state to jump
+                _Anim.SetBool("OnGround", false);
+            }
+
+            // Better jump from youtube
+            if (_rb2d.velocity.y < 0) // If the player is jumping
+            {
+                // The player is currently jumping
+                _rb2d.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            }
+            else if (_rb2d.velocity.y > 0 && !_playerJump)  // Player is no longer jumping/falling
+            {
+                // Player is falling
+                _rb2d.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            }
+
+            // If the player is climbing the wall
+            if (_isClimbingWall)
+            {
+                // Player climbs wall
+                _rb2d.velocity = new Vector2 (0, 1 * maxMovementSpeed);
+            }
         }
 	}
 

@@ -78,6 +78,9 @@ public class YumiContoller : InfRunnerController
 
         // Player will start running after a set period seconds
         //Invoke("startRunning", startDelay);
+
+        // Player will start running after a set time
+        Invoke("startRunning", startDelay);
     }
 
     /*

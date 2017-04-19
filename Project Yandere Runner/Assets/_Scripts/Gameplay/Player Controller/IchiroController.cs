@@ -85,7 +85,7 @@ public class IchiroController : InfRunnerController
         */
 
         // Player will start running after a set period seconds
-        //Invoke("startRunning", startDelay);
+        Invoke("startRunning", startDelay);
     }
     /*
     // Fixed Update - For Physics
