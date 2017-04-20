@@ -5,65 +5,15 @@ using UnityEngine;
 // Player Controller for Ichiro
 public class IchiroController : InfRunnerController 
 {
-    /*
 
-    [Header("Player Movement Values")]
-    public float MaxMovementSpeed = 5;  // The players movement speed
+    // Class variables
+    //  Public
+    public float distanceTraveled = 0;      // Stores the current distance traveled
+
+    //  Private
+    private Vector2 lastPosition;           // Stores the last position
+
     
-    public bool playerAutoRun = false;          // Weather the player will autorun or not
-
-    public float jumpForce = 5;             // THe force in which the player will jump
-	public float fallMultiplier = 2.5f;     // 
-    public float lowJumpMultiplier = 2.0f;  //
-
-    [Header("Player Physics")]
-    public Transform groundCheck;   // Stores a transform of a Groundcheck object
-	public LayerMask whatIsGround;  // Allows choice for choosing what the ground currently is
-
-    [HeaderAttribute("Player Actions")]
-    public float dashDistance = 1.0f;       // Sets how far the player will dash
-    public float dashCooldown = 5.0f;       // How long the cooldown for the dash will be
-
-    [HeaderAttribute("Platform Spawner")]
-    public PlatformSpawnManager platformSpawner;    // Reference to the platform spawn manager
-
-
-    //UI management
-    [HeaderAttribute ("UI")]
-    //public UI_Manager UI;                       // Reference to the UI Manager script
-
-    // Private variables
-
-    // Game Input
-    //  Keycode input for each of the inputs
-    private string _upAction = "UpAction";
-    private string _downAction = "DownAction";
-    private string _leftAction = "LeftAction";
-    private string _rightAction = "RightAction";
-
-
-    // Player physics
-    private bool _facingRight;       	    	// Weather the player is facing right or not
-	private bool _isGrounded        = false; 	// If the player is grounded or not
-	private bool _isClimbingWall    = false;    // If the player is currently climbing a wall
-	private float _groundRadius     = 0.2f;		// The radius of the grounded circle
-
-	// Player Controller
-	private float move;				// Stores player movement data
-	private bool jump;				// Stores weather the player is jumping or not
-	private bool wallClimb;         // Stores weather the player is climbing the wall
-    private bool dash;              // Stores weather the player can dash
-
-    // Player Animation
-    private Animator anim;          // Reference to the player's Animator component
-    private Rigidbody2D rb2D;       // Reference to the player's Rigidbody2D Component
-
-    // Cooldown timers
-    private float _dashCooldownStart = 0f;   // Cooldown timer for the player dash
-    */
-
-
-
     //////////////////////////////////////////////
     // Class Functions
     //////////////////////////////////////////////
@@ -79,6 +29,24 @@ public class IchiroController : InfRunnerController
         // Player will start running after a set period seconds
         Invoke("startRunning", startDelay);
     }
+
+
+    private void Start()
+    {
+        // Initialized the last position as this current position
+        //lastPosition = transform.position;
+    }
+
+    
+    private void Update()
+    {
+        // Updates the distance traveled between this current position and the last position
+        //distanceTraveled += Vector2.Distance(transform.position, lastPosition);
+
+        // Updates the last position with the new position
+        //lastPosition = transform.position;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -152,4 +120,7 @@ public class IchiroController : InfRunnerController
     {
 
     }
+
+
+
 }

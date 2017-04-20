@@ -8,26 +8,10 @@ public class YumiContoller : InfRunnerController
     /*
     // Public Variables
 
-    // Player Movement
-    [HeaderAttribute("Movement Values")]
-    public float maxMovementSpeed = 5;
-    public float startDelay;
-
-    // Jump values
-    [HeaderAttribute("Jump Values")]
-    public float jumpForce = 5f;            // The force of which the player will jump upwards
-    public float fallMultiplier = 2.5f;     //
-    public float lowJumpMultiplier = 2.0f;  //
-
-    [HeaderAttribute("Is Chaser")]
-    public static bool isChasing;
-
     [HeaderAttribute("Raycast and Physics Values")]
     public static float groundRayDistance;     // The distance of the ray point towards the ground
     public static float wallRayDistance;       // The distance the ray will travel towards a wall
-    //public LayerMask whatIsGround;      // Reference to the ground layer
     public static LayerMask whatIsWall;        // Reference to the wall
-    //public Transform groundCheck;       // Stores a transform of a Groundcheck object
 
     [HeaderAttribute("Raycast Angle")]
     [RangeAttribute(-1.0f, 1.0f)]

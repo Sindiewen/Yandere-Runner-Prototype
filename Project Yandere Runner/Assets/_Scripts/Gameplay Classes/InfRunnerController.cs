@@ -30,10 +30,6 @@ public class InfRunnerController : MonoBehaviour
     public Transform groundCheck;                   // Stores a transform of the ground check object
     public LayerMask whatIsGround;                  // Chooses what the ground layer is
 
-    [HeaderAttribute("Player Actions")]
-    public float dashDistance;                      // Sets how far the player will dash
-    public float dashCooldown;                      // Sets how long before the player can dash again
-
     [HeaderAttribute("Platform Spawner")]
     public PlatformSpawnManager platformSpawner;    // Reference to the platform spawn manager
 
@@ -132,7 +128,7 @@ public class InfRunnerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Initializes the player movement to the horizontal axis
-        _playerMove = Input.GetAxis("Move Horizontal");
+        _playerMove = Input.GetAxis("Horizontal");
 
         // Cheacks weather the player is currently grounded using a collider circle
         //  Returns a bool of weather it is grounded or not
