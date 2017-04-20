@@ -76,121 +76,9 @@ public class IchiroController : InfRunnerController
         _Anim = GetComponent<Animator>();
         _rb2d = GetComponent<Rigidbody2D>();
 
-        /*
-        // Ensures the player is defaulted to facing right
-        _facingRight = true;
-
-        // Defaults the player being grounded to false
-        _isGrounded = false;
-        */
-
         // Player will start running after a set period seconds
         Invoke("startRunning", startDelay);
     }
-    /*
-    // Fixed Update - For Physics
-    private void FixedUpdate()
-    {
-        // Moves the player //
-
-        // Stores the movement value of the player
-        move = Input.GetAxis("Move Horizontal");
-		
-        // Checks weahter the player is currently grounded or not using a collider circle
-        // Returns a bool if grounded or not
-        //isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-		_isGrounded = Physics2D.OverlapCircle(groundCheck.position, _groundRadius, whatIsGround);
-        anim.SetBool("OnGround", _isGrounded);
-
-        // Toggles weather the player is automatically running or not
-        if (playerAutoRun)
-        {
-            // automatically moves the player
-            rb2D.velocity = new Vector2(1 * MaxMovementSpeed, rb2D.velocity.y); 
-            
-            // Sets the float value of the animator's Speed to allow the player animation to play
-            // Mathf.abs gets the absolute value --- 1 = 1, -1 = 1
-            anim.SetFloat("Speed", Mathf.Abs(1));
-        }
-        else
-        {
-            // Moves the player by adding velocity to the player
-            // NOTE: Changing 1 to 'move' will allow full movement in 2d. 1 is auto run
-		    rb2D.velocity = new Vector2(move * MaxMovementSpeed, rb2D.velocity.y);
-		
-            // Sets the float value of the animator's Speed to allow the player animation to play
-            // Mathf.abs gets the absolute value --- 1 = 1, -1 = 1
-            anim.SetFloat("Speed", Mathf.Abs(move));
-        }
-        
-        // Flips the player in regards to where they're moving and if they're facing right or not
-        if (move > 0 && !_facingRight || move < 0 && _facingRight)
-        {
-            flip();
-        }
-    }
-
-	private void Update()
-	{
-        // Function Variables //
-
-		// Player Input definitions
-		jump = Input.GetButton(_upAction);          // Player is jumping
-        wallClimb = Input.GetButton(_upAction);         // player is climbing wall
-        dash = Input.GetButtonDown(_rightAction);       // Player is dashing
-
-
-
-        // Jump Logic //
-
-		// Checks if the player is grounded and is jumping
-		if (_isGrounded && jump)
-		{
-            // Player is now jumping - Pushes player upwards
-		    rb2D.velocity = Vector2.up * jumpForce; // Jumps upwards
-		
-		     // Sets animation state to false
-            anim.SetBool("OnGround", false);
-            
-        }
-		
-        
-        // Better jump from youtube video
-        // Better Jumpng in Unity with Four Lines of Code
-        if (rb2D.velocity.y < 0)    // If player is jumping
-        {
-            // THe player is jumping
-            rb2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        }
-        else if (rb2D.velocity.y > 0 && !jump) // If player is falling
-        {
-            // Player is falling
-            rb2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;   
-        }
-
-
-
-        // Wall Climb logic //
-        if (_isClimbingWall && wallClimb)
-        {
-            //Debug.Log("Player climbing wall");
-            // automatically moves the player
-            rb2D.velocity = new Vector2(0 ,1 * MaxMovementSpeed); 
-
-            //TODO: Set animation state to climbing wall
-        }
-
-
-        // Dash Logic 
-        if (dash)
-        {
-            // Player is now dashing
-            playerDash();
-        }
-
-	}
-    */
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -245,29 +133,8 @@ public class IchiroController : InfRunnerController
             // Set animation state to returning to running state
         }
     }
-
-
-
-    /*
-    // Player Movement Functions
-
-
-    // Flips the player sprite so the player can move either direction
-    void flip()
-    {
-        // Sets facing right to the opposite of what it currently is
-        _facingRight = !_facingRight;
-
-        // Stores the local scale of the player
-        Vector3 theScale = transform.localScale;
-
-        // Multiplies it by itself by a negitive value to get an opposite of what it is
-        theScale.x *= -1;
-
-        // Sets the localscale to what theScale currently is
-        transform.localScale = theScale;
-    } 
-
+    
+    
 
     // Player Dash
     void playerDash()
@@ -279,8 +146,6 @@ public class IchiroController : InfRunnerController
 
         // TODO: Instead of forcing player forwards, greatly increase player speed temporarily
     }
-    */
-
 
     // When the player has been caught by Yumi
     void Caught()

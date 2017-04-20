@@ -37,9 +37,6 @@ public class InfRunnerController : MonoBehaviour
     [HeaderAttribute("Platform Spawner")]
     public PlatformSpawnManager platformSpawner;    // Reference to the platform spawn manager
 
-    [HeaderAttribute("Is Chaser")]
-    public bool isChasing;                          // Weather the player is either a runner or a chaser
-
     [HeaderAttribute("Chaser Physics and Raycast")]
     public float groundRayDistance;                 // THe distance of the raycast pointed towards the ground
                                                     // Checks if player is about to hit a gap to jump over
@@ -236,7 +233,7 @@ public class InfRunnerController : MonoBehaviour
             if (_playerDash)
             {
                 // Player is now dashing
-                playerIsDashing();
+                
             }
         }
         // If the playermode is chaserYumi
@@ -246,6 +243,9 @@ public class InfRunnerController : MonoBehaviour
             //  This transform's location, where, distance to wall/jump point, and what is defined as wall
             _YumiPitRay = Physics2D.Raycast(this.transform.position, _yumiFrontPitRayAngle, groundRayDistance, whatIsGround);
             _yumiWallRay = Physics2D.Raycast(this.transform.position, _yumiFrontWallRayAngle, wallRayDistance, whatIsWall);
+
+            //TODO: Get the yumi controller specific values out of this class and move it all to YumiController.cs
+            //  Ensure the variables you want ot use are public static
 
             // Sets the angle of the raycast
             _yumiFrontPitRayAngle = new Vector2(pitCheckRayX, pitCheckRayY);
@@ -290,14 +290,6 @@ public class InfRunnerController : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
     // Player movement functions //
 
     protected void startRunning()
@@ -320,15 +312,4 @@ public class InfRunnerController : MonoBehaviour
         // Sets the localscale to what theScale currently is
         transform.localScale = theScale;
     }
-
-    
-
-    // Player action functions //
-    private void playerIsDashing()
-    {
-        // TODO: Dashes the player
-    }
-
-
-
 }
