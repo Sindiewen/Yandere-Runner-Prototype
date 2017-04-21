@@ -1,7 +1,11 @@
 fileFormatVersion: 2
 guid: b66bd9e117f9eb94bacd07b4d62d9134
 folderAsset: yes
+<<<<<<< master
 timeCreated: 1492723377
+=======
+timeCreated: 1492735735
+>>>>>>> Ichiro Controller fixed: Had to move distance controller to seprate file
 licenseType: Free
 DefaultImporter:
   userData: 

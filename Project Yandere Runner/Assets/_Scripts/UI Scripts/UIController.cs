@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
 
-    public IchiroController ichiro;     // Reference to the Ichiro Controller
+    public IchiroDistanceController ichiro;     // Reference to the Ichiro Controller
 
     [HeaderAttribute("Distance Traveled")]
     public Text distanceTraveledText;   // Reference to the distance traveled text

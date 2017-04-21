@@ -9,8 +9,8 @@ public class InfRunnerController : MonoBehaviour
     //  Defines the playmode of the game using enums
     public enum PlayerMode 
     {
-        runnerIchiro = 0,
-        chaserYumi = 1
+        runnerIchiro,
+        chaserYumi
     };
 
     // Public Variables
