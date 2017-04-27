@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
     public IchiroDistanceController ichiro;     // Reference to the Ichiro Controller
 
     [HeaderAttribute("Distance Traveled")]
-    public Text distanceTraveledText;   // Reference to the distance traveled text
+    public Text distanceTraveledText;           // Reference to the distance traveled text
 
 
 
@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         // Updated the distance traveled text
-        distanceTraveledText.text = ichiro.distanceTraveled.ToString();
+        distanceTraveledText.text = Mathf.RoundToInt(ichiro.distanceTraveled).ToString();
     }
 
 

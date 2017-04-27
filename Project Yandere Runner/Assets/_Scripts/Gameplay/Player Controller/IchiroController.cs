@@ -51,18 +51,6 @@ public class IchiroController : InfRunnerController
                 platformSpawner.SpawnPlatform();
             }
         }
-
-        // If player collides with a coin object via Tag
-        if(collision.gameObject.tag == "Pickup_Coin")
-        {
-            // destroy coin object
-            Destroy(collision.gameObject);
-
-            // Add 1 to total coin count
-            //UI.coinCount += 1;
-
-            //Debug.Log("Total Coin Count: " + UI.coinCount.ToString());
-        }
     } 
 
     private void OnCollisionExit2D(Collision2D collision)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformDespawnManager : MonoBehaviour 
+public class DespawnManager : MonoBehaviour 
 {
 	// Despawns platform that exits the collider to despawn
 
@@ -20,6 +20,13 @@ public class PlatformDespawnManager : MonoBehaviour
 			// Decrements total number of spawned platforms
 			platformSpawn._numOfTotalSpawnedPlatforms--;
 			
+		}
+
+		// If a coin object exits the despawn cllider		
+        if(col.gameObject.tag == "Pickup_Coin")
+        {
+            // destroy coin object
+            Destroy(col.gameObject);
 		}
 	}
 }
