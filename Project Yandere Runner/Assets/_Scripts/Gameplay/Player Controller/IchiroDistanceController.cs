@@ -6,6 +6,9 @@ public class IchiroDistanceController : MonoBehaviour {
 
     // Class variables
     //  Public
+    [HeaderAttribute("UI")]
+    public UIController UI;                 // Reference to the UI Controller
+    
     public float distanceTraveled = 0;      // Stores the current distance traveled
 
     //  Private
@@ -26,5 +29,8 @@ public class IchiroDistanceController : MonoBehaviour {
 
         // Updates the last position with the new position
         lastPosition = transform.position;
-    }
+        
+        // Updates the player distance traveled
+        UI.UpdateDistance(distanceTraveled);     
+     }
 }

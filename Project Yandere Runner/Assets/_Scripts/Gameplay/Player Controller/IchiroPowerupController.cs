@@ -5,6 +5,10 @@ using UnityEngine;
 public class IchiroPowerupController : MonoBehaviour 
 {
 	// Public Variables
+	[HeaderAttribute ("UI")]
+	public UIController UI;							// Reference to the UI Controller
+
+
 	[HeaderAttribute ("Coin Speed Boost")]
 	public int speedBoostTime;						// How long the speed boost will last
 	public int speedBoosIncrease;					// How much the player speed will increase
@@ -33,7 +37,9 @@ public class IchiroPowerupController : MonoBehaviour
             // Add 1 to total coin count
             coinCount++;
 			coinCountInrow++;
-            //UI.coinCount += 1;
+            
+			// Adds 1 to the UI Coin Count Text
+			UI.IterateCoinCount(coinCount);	
 
             //Debug.Log("Total Coin Count: " + UI.coinCount.ToString());
             
