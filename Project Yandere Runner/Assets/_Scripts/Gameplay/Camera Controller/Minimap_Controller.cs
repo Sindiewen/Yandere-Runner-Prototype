@@ -68,7 +68,7 @@ public class Minimap_Controller : MonoBehaviour
         distanceFromMiddlePoint = (this.transform.position - middlePoint).magnitude;
 
         // Sets the orthographic size
-        camComponent.orthographicSize = Mathf.Rad2Deg * Mathf.Atan((0.5f * distanceBetweenPlayers) / (distanceFromMiddlePoint * aspectRatio)) / 20; 
+        camComponent.orthographicSize = Mathf.Rad2Deg * Mathf.Atan((0.5f * distanceBetweenPlayers) / (distanceFromMiddlePoint * aspectRatio)) / 15; 
         //camComponent.orthographicSize = (distanceBetweenPlayers) / (distanceFromMiddlePoint * aspectRatio) / 20;
 
         // Adds a small margin so the players are not on the viewport border
