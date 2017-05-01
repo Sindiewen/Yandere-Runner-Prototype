@@ -111,7 +111,7 @@ public class PlatformSpawnManager : MonoBehaviour
 		
 		// Random Number Generation determining platform Spawning  //
 		//		Seeds random value for determining what platform to spawn next
-		_RandomPlatformToSpawn = Random.Range(0, PlatformHolder.Length);
+		_RandomPlatformToSpawn = Random.Range(1, PlatformHolder.Length);
 		
 		// 		Seeds random number to create a buffer between both platforms
 		_PlatformSpawnBuffer = Random.Range(minPlatformSpawnBuffer, maxPlatformSpawnBuffer);
