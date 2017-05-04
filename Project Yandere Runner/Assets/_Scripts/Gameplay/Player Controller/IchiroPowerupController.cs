@@ -12,6 +12,7 @@ public class IchiroPowerupController : MonoBehaviour
 	[HeaderAttribute ("Coin Speed Boost")]
 	public int speedBoostTime;						// How long the speed boost will last
 	public int speedBoosIncrease;					// How much the player speed will increase
+	public int numberOfCoinsRequired;				// Stores the number of coins required before the player will do a speed boost
 	public int coinCount = 0;						// Initiallizes the current coin count. Counts number of coins the player picked up
 	public int coinCountInrow = 0;					// How many coins the player picked up in a row
 
@@ -44,7 +45,7 @@ public class IchiroPowerupController : MonoBehaviour
             //Debug.Log("Total Coin Count: " + UI.coinCount.ToString());
             
 			// If the user picked up a total of 10 coins in a row
-			if (coinCountInrow == 10)
+			if (coinCountInrow == numberOfCoinsRequired)
 			{
 				// reset coin coint in row back to 0
 				coinCountInrow = 0;
