@@ -12,6 +12,7 @@ public class Platform_Object_Spawn_Manager : MonoBehaviour
 	
 	// Public Hazard Spawn Variables
 	[HeaderAttribute("Hazard Spawn Attributes")]
+	public bool canSpawnHazards;				// If the hazards can spawn or not when the platform is loaded
 	public int NumOfTimesHazardsCanSpawnPerPlat;// How many times the hazard spawner can generate hazards before stopping
 	
 	[HeaderAttribute("Floating Hazards")]
@@ -43,10 +44,15 @@ public class Platform_Object_Spawn_Manager : MonoBehaviour
 	{
 		// Initiates the corresponding functions
 		SpawnCoins();				// Spawns coins
-		SpawnFloatingHazards();		// Spawns floating hazards
-		SpawnGroundHazards();		// Spawns ground based hazards
-		// TODO: Have 2 spawn hazard functions
-		// 1 for floating hazards, another for ground based hazards
+		
+		if(canSpawnHazards)
+		{
+			SpawnFloatingHazards();		// Spawns floating hazards
+			SpawnGroundHazards();		// Spawns ground based hazards
+			// TODO: Have 2 spawn hazard functions
+			// 1 for floating hazards, another for ground based hazards
+		}
+		
 	}
 	
 	// Spawns coins

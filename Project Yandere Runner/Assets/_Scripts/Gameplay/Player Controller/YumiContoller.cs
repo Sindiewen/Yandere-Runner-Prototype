@@ -5,6 +5,8 @@ using UnityEngine;
 public class YumiContoller : InfRunnerController
 {
 
+    // TODO: Once Yumi is in front of a floating/floor hazard, destroy it with her axe
+
     /*
     // Public Variables
 
