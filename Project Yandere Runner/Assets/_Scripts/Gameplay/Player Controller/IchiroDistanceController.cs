@@ -31,6 +31,6 @@ public class IchiroDistanceController : MonoBehaviour {
         lastPosition = transform.position;
         
         // Updates the player distance traveled
-        UI.UpdateDistance(distanceTraveled);     
+        //UI.UpdateDistance(distanceTraveled);     
      }
 }

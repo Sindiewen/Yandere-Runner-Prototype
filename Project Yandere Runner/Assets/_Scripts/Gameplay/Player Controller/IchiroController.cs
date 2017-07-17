@@ -6,6 +6,8 @@ using UnityEngine;
 public class IchiroController : InfRunnerController 
 {
 
+   
+
     //////////////////////////////////////////////
     // Class Functions
     //////////////////////////////////////////////
@@ -33,6 +35,14 @@ public class IchiroController : InfRunnerController
             // Player is climbing the wall
             _isClimbingWall = true;
         }
+        
+        // If the player collides with a platform hazard 
+        if (collision.gameObject.tag == "Hazard")
+        {
+            // TODO: When the player hits a hazard. delete the hazard and slow the player
+            // down temporarily
+            hitPlatformHazard(collision);
+        }
 
         // If the player gets caught by Yumi...
         // End game
@@ -51,6 +61,7 @@ public class IchiroController : InfRunnerController
                 platformSpawner.SpawnPlatform();
             }
         }
+
     } 
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -64,6 +75,15 @@ public class IchiroController : InfRunnerController
 
             // Set animation state to returning to running state
         }
+    }
+
+    // Destroys the collided gameobject
+    // 
+    void hitPlatformHazard(Collision2D collision)
+    {
+        Destroy(collision.gameObject);
+        // Slows the player down temporarily
+        //after a certain time, return player speed to normal
     }
     
     
