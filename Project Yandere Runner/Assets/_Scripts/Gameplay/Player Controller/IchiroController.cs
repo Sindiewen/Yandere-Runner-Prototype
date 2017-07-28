@@ -41,7 +41,7 @@ public class IchiroController : InfRunnerController
         {
             // TODO: When the player hits a hazard. delete the hazard and slow the player
             // down temporarily
-            hitPlatformHazard(collision);
+            StartCoroutine(hitPlatformHazard(collision));
         }
 
         // If the player gets caught by Yumi...
@@ -77,13 +77,23 @@ public class IchiroController : InfRunnerController
         }
     }
 
+
     // Destroys the collided gameobject
     // 
-    void hitPlatformHazard(Collision2D collision)
+    IEnumerator hitPlatformHazard(Collision2D collision)
     {
+        float curPlayerSpeed = maxMovementSpeed;
+
         Destroy(collision.gameObject);
-        // Slows the player down temporarily
+
+        // Slows the player down temporarily for a set period
+        maxMovementSpeed = curPlayerSpeed / 2;
+        yield return new WaitForSeconds(2.0f);
+
+        // Set the player to be invulerable to speed decrease
+
         //after a certain time, return player speed to normal
+        maxMovementSpeed = curPlayerSpeed;
     }
     
     
