@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Player Controller for Ichiro
 public class IchiroController : InfRunnerController 
@@ -46,6 +47,10 @@ public class IchiroController : InfRunnerController
 
         // If the player gets caught by Yumi...
         // End game
+        if (collision.gameObject.tag == "Yumi")
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
     
     // If the player collides with a trigger

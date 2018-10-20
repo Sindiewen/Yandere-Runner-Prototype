@@ -48,7 +48,10 @@ public class YumiContoller : InfRunnerController
         // Gets references to the components
         _Anim = GetComponent<Animator>();
         _rb2d = GetComponent<Rigidbody2D>();
-        
+
+        // Ignore layers
+        Physics2D.IgnoreLayerCollision(13, 12, true);
+
         // Player will start running after a set time
         Invoke("startRunning", startDelay);
     }
@@ -61,6 +64,9 @@ public class YumiContoller : InfRunnerController
         {
             // Player is climbing wall
             _isClimbingWall = true;
+        }
+        if (collision.gameObject.tag == "Hazard")
+        {
         }
     }
 
